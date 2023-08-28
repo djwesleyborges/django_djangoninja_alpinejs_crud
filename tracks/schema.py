@@ -7,7 +7,7 @@ from tracks.models import Track
 class TrackSchema(ModelSchema):
     class Config:
         model = Track
-        model_fields = ['title', 'last_play', 'artist', 'duration']
+        model_fields = ['id', 'title', 'last_play', 'artist', 'duration']
 
 
 class NotFoundSchema(Schema):
