@@ -10,5 +10,11 @@ class TrackSchema(ModelSchema):
         model_fields = ['id', 'title', 'last_play', 'artist', 'duration']
 
 
+class TrackSchemaUpdate(ModelSchema):
+    class Config:
+        model = Track
+        model_fields = ['title', 'last_play', 'artist', 'duration']
+
+
 class NotFoundSchema(Schema):
     message: str

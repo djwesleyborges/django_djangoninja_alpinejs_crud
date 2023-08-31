@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from ninja import NinjaAPI
 
 from tracks.models import Track
-from tracks.schema import TrackSchema, NotFoundSchema
+from tracks.schema import TrackSchema, NotFoundSchema, TrackSchemaUpdate
 
 api = NinjaAPI()
 

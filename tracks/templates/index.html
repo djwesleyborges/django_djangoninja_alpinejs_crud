@@ -79,7 +79,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
                 </div>
@@ -168,18 +168,13 @@
             },
 
             updateData() {
-                if (this.form.title.length &&
-                    this.form.artist.length &&
-                    this.form.duration.length &&
-                    this.form.last_play.length) {
-                    this.tracks.splice(this.tracks.indexOf(track), 1, {
-                        title: this.form.title,
-                        artist: this.form.artist,
-                        duration: this.form.duration,
-                        last_play: this.form.last_play
+                axios.put(`/tracks/${this.form.id}`, this.form)
+                    .then(response => {
+                        // Lidar com a resposta, como fechar o modal ou exibir uma mensagem de sucesso
                     })
-                    this.cancelEdit()
-                }
+                    .catch(error => {
+                        // Lidar com erros, como exibir uma mensagem de erro
+                    });
             },
 
             cancelEdit() {
