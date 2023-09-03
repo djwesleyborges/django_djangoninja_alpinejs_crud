@@ -114,7 +114,8 @@
 
     <script>
 
-        const apiUrl = 'http://localhost:8000/api/tracks'
+        //const apiUrl = 'http://localhost:8000/api/tracks'
+        const apiUrl = '/api/tracks'
         const headers = { 'Content-Type': 'application/json' }
 
         const appData = () => ({
@@ -153,7 +154,8 @@
                 axios.post(apiUrl, bodyData, { headers: headers })
                     .then(response => {
                         this.tracks = [response.data, ...this.tracks]
-                        this.resetForm()
+                        this.resetForm();
+                        this.getTracks();
                     })
             },
 
@@ -164,16 +166,27 @@
                 this.form.title = track.title
                 this.form.artist = track.artist
                 this.form.duration = track.duration
-                this.form.last_play = track.last_play
+                this.form.last_play = track.last_play.replace('Z', '')
             },
 
             updateData() {
-                axios.put(`/tracks/${this.form.id}`, this.form)
+                axios.put(`/api/tracks/${this.form.id}`, this.form)
                     .then(response => {
                         // Lidar com a resposta, como fechar o modal ou exibir uma mensagem de sucesso
+                        console.log(response)
+                        if (response.request.status === 200) {
+                            alert(this.form.title + " foi atualizado com sucesso.")
+
+                            // Atualiza os dados da tela
+                            this.getTracks();
+
+                            // Fechar Modal
+                            var modal = document.getElementById('myEditModal');
+                            modal.querySelector('.btn-close').click();
+                        }
                     })
                     .catch(error => {
-                        // Lidar com erros, como exibir uma mensagem de erro
+                        alert("Ocorreu um erro: " + error)
                     });
             },
 
@@ -183,7 +196,7 @@
             },
 
             deleteItem(track) {
-                axios.delete(`http://localhost:8000/api/tracks/${track.id}`)
+                axios.delete(`/api/tracks/${track.id}`)
                     .then((res) => {
                         if (res.data.success) {
                             this.tracks.splice(this.tracks.indexOf(track), 1)
